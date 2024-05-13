@@ -23,11 +23,23 @@ const Feriados = ({search}) => {
     }
     return(
         <>
+            <div>
+                {
+                    fechasAMostrar.map((fecha) => (
+                        <div key={fecha.date}>
+                            <h2>{fecha.date}</h2>
+                            <p>{fecha.title}</p>
+                        </div>
+                    ))
+                }
+            </div>
+            {fechasAMostrar.length == 0? <p>No hay feriados</p>: null}
         
        
         </>
 
         )
     };
+};
 
     export default Feriados;

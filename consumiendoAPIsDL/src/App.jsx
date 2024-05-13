@@ -8,6 +8,9 @@ function App() {
   return (
     <>
       <h1>Cuanto Farta Pal 18 Cabros</h1>
+      <input type="text" value={search} onChange={(e)=>
+      setSearch(e.target.value)
+    }/>
       <Feriados search={search} />
       
       
