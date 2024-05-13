@@ -1,15 +1,15 @@
-import { useEffect, useState } from 'react'
-import Lista from './components/Lista'
+import { useState } from 'react'
+import './App.css'
+import Feriados from './components/Feriados'
+
 function App() {
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(0)
+
   return (
     <>
-    <h1>Bienvenido a la web de rick and morty</h1>
-    <input type="text" value={search} onChange={(e)=>
-      setSearch(e.target.value)
-    }/>
-   <Lista search={search}/>
-   
+      <h1>Cuanto Farta Pal 18 Cabros</h1>
+      <Feriados search={search} />
+      
       
     </>
   )
