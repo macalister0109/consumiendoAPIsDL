@@ -7,7 +7,7 @@ function App() {
 
   return (
     <>
-      <h1>Cuanto Farta Pal 18 Cabros</h1>
+      <h1>Cuanto Farta Pal Siguiente Feriado Cabros</h1>
       
       <Feriados  />
       
