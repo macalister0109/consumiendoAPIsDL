@@ -1,64 +1,66 @@
 import React, { useState, useEffect } from 'react';
 
 const Feriados = () => {
-  const [nextHoliday, setNextHoliday] = useState(null);
-  const [timeLeft, setTimeLeft] = useState({});
+  const [siguienteFeriado, setSiguienteFeriado] = useState(null);
+  const [tiempoRestante, setTiempoRestante] = useState({});
 
   useEffect(() => {
-    const fetchHolidays = async () => {
+    const fetchFeriados = async () => {
       try {
         const response = await fetch('https://api.boostr.cl/feriados/en.json');
         const data = await response.json();
-        const holidays = data.data;
-        const today = new Date();
+        const feriados = data.data;
+        const hoy = new Date();
 
-        const upcomingHoliday = holidays.find(holiday => {
-          const holidayDate = new Date(holiday.date);
-          return holidayDate > today;
+        const feriadoEntrante = feriados.find(feriado => {
+          const fechaFeriado = new Date(feriado.date);
+          return fechaFeriado > hoy;
         });
 
-        setNextHoliday(upcomingHoliday);
+        setSiguienteFeriado(feriadoEntrante);
       } catch (error) {
-        console.error('Error fetching holidays:', error);
+        console.error('Error en carga de feriados:', error);
       }
     };
 
-    fetchHolidays();
+    fetchFeriados();
   }, []);
 
   useEffect(() => {
-    if (!nextHoliday) return;
+    if (!siguienteFeriado) return;
 
     const intervalId = setInterval(() => {
-      const holidayDate = new Date(nextHoliday.date);
-      const now = new Date();
+      const fechaFeriado = new Date(siguienteFeriado.date);
+      const hoy = new Date();
 
-      const difference = holidayDate - now;
+      const diferencia = fechaFeriado - hoy;
 
-      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
-      const minutes = Math.floor((difference / 1000 / 60) % 60);
-      const seconds = Math.floor((difference / 1000) % 60);
+      const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+      const horas = Math.floor((diferencia / (1000 * 60 * 60)) % 24);
+      const minutos = Math.floor((diferencia / 1000 / 60) % 60);
+      const segundos = Math.floor((diferencia / 1000) % 60);
 
-      setTimeLeft({ days, hours, minutes, seconds });
+      setTiempoRestante({ dias, horas, minutos, segundos });
     }, 1000);
 
     return () => clearInterval(intervalId);
-  }, [nextHoliday]);
+  }, [siguienteFeriado]);
 
-  if (!nextHoliday) {
-    return <div>Loading...</div>;
+  if (!siguienteFeriado) {
+    return <div>Cargando...</div>;
   }
 
   return (
     <div>
-      <h1>Siguiente Feriado en: {nextHoliday.name}</h1>
+      <h2>y será por: {siguienteFeriado.title}</h2>
+      <h2>en</h2>
       <div>
-        <span>{timeLeft.days} Dias </span>
-        <span>{timeLeft.hours} Horas </span>
-        <span>{timeLeft.minutes} Minutos </span>
-        <span>{timeLeft.seconds} Segundos </span>
+        <span>{tiempoRestante.dias} Dias </span>
+        <span>{tiempoRestante.horas} Horas </span>
+        <span>{tiempoRestante.minutos} Minutos </span>
+        <span>{tiempoRestante.segundos} Segundos </span>
       </div>
+      
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 import Feriados from './components/Feriados'
+import vivaChile from './assets/vivaaaaaaaaaaaaa.png'
 
 function App() {
   
@@ -10,6 +11,8 @@ function App() {
       <h1>Cuanto Farta Pal Siguiente Feriado Cabros</h1>
       
       <Feriados  />
+      <br />
+      <img src={vivaChile} alt="" />
       
       
     </>
